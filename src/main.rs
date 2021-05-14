@@ -1,4 +1,4 @@
-use std::env;
+use std::{env, net::ToSocketAddrs};
 
 use flexi_logger::Logger;
 use log::info;
@@ -12,9 +12,12 @@ async fn main() {
 
 async fn run() {
     Logger::with_env_or_str("info").start().unwrap();
-    let port = env::var("JLS_EXPORTER_PORT")
-        .map_or(Ok(9823), |s| s.parse())
-        .expect("failed to parse port as number");
+    let bind_addr = env::var("JLS_EXPORTER_BINDADDR")
+        .unwrap_or("0.0.0.0:9823".to_string())
+        .to_socket_addrs()
+        .expect("failed to parse JLS_EXPORTER_BINDADDR")
+        .next()
+        .expect("failed to parse JLS_EXPORTER_BINDADDR");
     let jls_stats_token =
         env::var("JLS_STATS_TOKEN").expect("Environment Variable JLS_STATS_TOKEN not set");
     let jls_base_url = env::var("JLS_BASE_URL").expect("Environment Variable JLS_BASE_URL not set");
@@ -30,9 +33,7 @@ async fn run() {
     let metrics = warp::path("metrics")
         .and(warp::path::end())
         .and_then(move || metrics_handle(jls_url));
-    warp::serve(index.or(metrics))
-        .run(([127, 0, 0, 1], port))
-        .await
+    warp::serve(index.or(metrics)).run(bind_addr).await
 }
 
 async fn metrics_handle(jls_url: &str) -> Result<Box<dyn warp::Reply>, warp::Rejection> {
