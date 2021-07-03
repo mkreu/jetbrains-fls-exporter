@@ -47,5 +47,4 @@ Variable | Default Value | Explanation
 -------- | ------------- | ------------
 JLS_BASE_URL | None, always required | Base URL of your license server
 JLS_STATS_TOKEN | None, always required | [API token of your license server](https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html#7ad5d2e6)
-JLS_EXPORTER_BINDADDR | `0.0.0.0:9836` | Default address this exporter should
-bind to
+JLS_EXPORTER_BINDADDR | `0.0.0.0:9836` | Default address this exporter should bind to
