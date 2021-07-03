@@ -13,7 +13,7 @@ async fn main() {
 async fn run() {
     Logger::with_env_or_str("info").start().unwrap();
     let bind_addr = env::var("JLS_EXPORTER_BINDADDR")
-        .unwrap_or("0.0.0.0:9823".to_string())
+        .unwrap_or("0.0.0.0:9836".to_string())
         .to_socket_addrs()
         .expect("failed to parse JLS_EXPORTER_BINDADDR")
         .next()

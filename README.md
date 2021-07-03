@@ -28,7 +28,7 @@ docker build --tag jls-exporter .
 # run
 docker run -d \
         --name jls-exporter \
-        -p 9823:9823
+        -p 9836:9836
         -e JLS_BASE_URL="https://example.com:8080" \
         -e JLS_STATS_TOKEN="<supersecrettoken>" \
         --stop-timeout 1 \
@@ -47,5 +47,5 @@ Variable | Default Value | Explanation
 -------- | ------------- | ------------
 JLS_BASE_URL | None, always required | Base URL of your license server
 JLS_STATS_TOKEN | None, always required | [API token of your license server](https://www.jetbrains.com/help/license_server/detailed_server_usage_statistics.html#7ad5d2e6)
-JLS_EXPORTER_BINDADDR | `0.0.0.0:9823` | Default address this exporter should
+JLS_EXPORTER_BINDADDR | `0.0.0.0:9836` | Default address this exporter should
 bind to
